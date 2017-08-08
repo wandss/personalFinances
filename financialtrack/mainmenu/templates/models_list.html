@@ -28,42 +28,50 @@
             </ul>
         </div>
         {%if page_title == 'Transacoes'%}
-        <div class="col-md-3">
+        <div class="col-md-3 well well-sm my_well">
             {%if current_month%}
             <div>
-                <h4>Lançamentos até: {{current_date|date:'d/m/Y'}}</h4>
+                <h4 class="well well-sm">Lançamentos até: {{current_date|date:'d/m/Y'}}</h4>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                         {%for month in current_month.keys%}
-                            <th>{{month}}</th>
+                            <th class="my_table_head">{{month}}</th>
                         {%endfor%}
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                         {%for value in current_month.values%}    
+                            {%if value < 0%}
+                            <td class="negative_value">{{value}}</td>
+                            {%else%}
                             <td>{{value}}</td>
+                            {%endif%}
                         {%endfor%}
                         </tr>
                     </tbody>
                 </table>
             </div>
             {%endif%}
-            <h4>Total Geral:</h4>
+            <h4 class="well well-sm">Total Geral:</h4>
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                         {%for k in history.keys%}
-                            <th>{{k}}</th>
+                            <th class="my_table_head">{{k}}</th>
                         {%endfor%}    
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             {%for v in history.values%}
+                            {%if v < 0%}
+                            <td class="negative_value">{{v}}</td>
+                            {%else%}
                             <td>{{v}}</td>
+                            {%endif%}
                             {%endfor%}
                         </tr>
                     </tbody>
@@ -75,12 +83,12 @@
                 <h4 id="future_title" class="btn btn-block btn-warning" data-toggle="collapse" data-target="#future_trans" >Lançamentos Futuros:</h4>
                 <div id="future_trans" class="collapse">
                 {%for key,value in future_expenses.items%}
-                <h5>{{key}}:</h5>
+                <h5 class="well well-sm">{{key}}:</h5>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                         {%for header in value.keys%}
-                            <th id="future_header">{{header}}</th>
+                            <th class="my_table_head" id="future_header">{{header}}</th>
                         {%endfor%}
                         </tr>
                     </thead>

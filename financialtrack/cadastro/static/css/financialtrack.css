@@ -17,3 +17,21 @@ a.list-group-item{
 #future_title{
     margin-bottom: 15px;
 }
+.navbar{
+    background: black;
+    background: linear-gradient(-17deg, gray 5%, black, #049 100%); 
+    border: none;
+    box-shadow: 2px 3px 20px 5px gray;
+}
+.my_well{
+    background:none;
+    border-radius: 0px;
+}
+.my_table_head{
+    background: linear-gradient(to bottom, #171,white, gray 180% );
+    border: none;
+}
+.negative_value{
+    color: red;
+}
+
