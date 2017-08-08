@@ -111,15 +111,6 @@ class TransacaoUpdate(generic.edit.UpdateView):
         transacao = form.save(commit=False)
         repeated = RepeatTransaction()
 
-        if Transacoes.objects.get(pk=transacao.id) != transacao.data:
-            #MUST REMOVE AND RECREATE ALL:
-            repeated.manageRepeated(transacao.pk)
-            repeated.createRepeatedTransactions(transacao.total_repeats,
-                                                transacao.data, 
-                                                form.cleaned_data,
-                                                self.request.user)
-
-            repeated.manageRepeated(transacao.pk, update=form.cleaned_data)
                   
 
 
@@ -136,6 +127,16 @@ class TransacaoUpdate(generic.edit.UpdateView):
                                                 form.cleaned_data,
                                                 self.request.user)
         else:
+            if Transacoes.objects.get(pk=transacao.id) != transacao.data:
+                repeated.manageRepeated(transacao.pk)
+                repeated.createRepeatedTransactions(transacao.total_repeats,
+                                                    transacao.data, 
+                                                    form.cleaned_data,
+                                                    self.request.user)
+
+                repeated.manageRepeated(transacao.pk, update=form.cleaned_data)
+                return super(TransacaoUpdate, self).form_valid(form)
+
             if Transacoes.objects.get(
                 pk=transacao.pk).total_repeats != transacao.total_repeats:
                 """Changing the number of repetitions, makes necessary
@@ -184,40 +185,13 @@ class LogoutView(generic.View):
 
 """
 TODO:
-    It is recreating everything, but not removing.
-
-    When updating Transacoes. 
-    if the original date stills the same, 
-    remove the date value from dict in repeat_days module.
-    Case the date is also been updated, all the registers must be deleted 
-    and recreated with the new date.
-
-
-    Fix Future dates issue:
-        Create a Transacao object with date= 10/08/2017 and repeate it 5x.
-        The next month's date has been set to day -1 (only happened at server
-        probably due to localtime at server, change model to use localdata)
-
-        Fix updating the date.
-
-
-    Add the last month saldus to the present month.
-    
-    Add some magin-bottom to the button "Lançamentos Futuros:"
-
-    When creating transacao objects with data property as a future date, 
-        and also repeating more dates, the system is repeating the same date
-        for the current month.
-
     "Navegue por datas" is not correctly ordered, test for years less than
         198..
-
-    Add data Toggle to Lançamentos Futuros, to clean up the screen
 
     Test: Create a Transacao with old date, then, update it to present date.
         Do the same with a Transacao which has repeated dates.
 
-    Test when updatind "data" field for transacoes.
+    Test when updating "data" attribute for transacoes.
         Test with repeated days.
         When creating a future date that has data greater than today's date,
         set repeat property to True????
@@ -225,7 +199,7 @@ TODO:
     Add javascript validations to: If user selects "Repeat", 
         it must insert a value for total_repeats
 
-    Create statistics based on last three months:
+    Create statistics based on the last three months:
         Sample: If a payment occurred at the same date for
         the last three months send mail or send message informing 
         that at this date you have this payment to do 
