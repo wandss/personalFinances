@@ -29,29 +29,9 @@
         </div>
         {%if page_title == 'Transacoes'%}
         <div class="col-md-3">
-            <h4>Total Geral:</h4>
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                        {%for k in history.keys%}
-                            <th>{{k}}</th>
-                        {%endfor%}    
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {%for v in history.values%}
-                            <td>{{v}}</td>
-                            {%endfor%}
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
             {%if current_month%}
             <div>
-                <h4>Mês Atual:</h4>
+                <h4>Lançamentos até: {{current_date|date:'d/m/Y'}}</h4>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -70,10 +50,29 @@
                 </table>
             </div>
             {%endif%}
+            <h4>Total Geral:</h4>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                        {%for k in history.keys%}
+                            <th>{{k}}</th>
+                        {%endfor%}    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {%for v in history.values%}
+                            <td>{{v}}</td>
+                            {%endfor%}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             {%if future_expenses%}
             <div>
-                <h4 class="btn btn-block btn-warning" data-toggle="collapse" data-target="#future_trans" >Lançamentos Futuros:</h4>
+                <h4 id="future_title" class="btn btn-block btn-warning" data-toggle="collapse" data-target="#future_trans" >Lançamentos Futuros:</h4>
                 <div id="future_trans" class="collapse">
                 {%for key,value in future_expenses.items%}
                 <h5>{{key}}:</h5>

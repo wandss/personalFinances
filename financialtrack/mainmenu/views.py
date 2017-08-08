@@ -57,6 +57,7 @@ class TransacoesView(generic.View):
         context['current_month'] = stats.summarizedData(month=True)
         context['years_list'] = stats.getYearMonths()
         context['result_set'] = transacoes
+        context['current_date'] = current_date
 
         return render(request, 'models_list.html', context)
 
@@ -173,7 +174,8 @@ class LogoutView(generic.View):
 """
 TODO:
     The Total Sum must be applied only for Transacoes that are rendered.
-        
+    
+    Add some magin-bottom to the button "Lançamentos Futuros:"
 
     When creating transacao objects with data property as a future date, 
         and also repeating more dates, the system is repeating the same date
