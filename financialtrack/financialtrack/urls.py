@@ -21,6 +21,7 @@ from mainmenu.views import LogoutView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^menu/', include('mainmenu.urls', namespace="mainmenu")),
+    url(r'^', include('mainmenu.urls')),
     url(r'^cadastro/', include('cadastro.urls', namespace="cadastro")),
     url(r'login/', include('login.urls', namespace="login")),
     url(r'logout/', LogoutView.as_view(), name='logout' ),

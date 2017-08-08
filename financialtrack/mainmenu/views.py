@@ -185,8 +185,11 @@ class LogoutView(generic.View):
 
 """
 TODO:
+    At future transactions, Fix the calculation for the paid documents:
+        Must filter by 'gte' current_date or 'gt'
+
     "Navegue por datas" is not correctly ordered, test for years less than
-        198..
+        198.. change it to a OrderedDict
 
     Test: Create a Transacao with old date, then, update it to present date.
         Do the same with a Transacao which has repeated dates.
