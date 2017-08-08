@@ -110,7 +110,18 @@ class TransacaoUpdate(generic.edit.UpdateView):
     def form_valid(self, form):
         transacao = form.save(commit=False)
         repeated = RepeatTransaction()
-        #import pdb;pdb.set_trace()#DEBUG
+
+        if Transacoes.objects.get(pk=transacao.id) != transacao.data:
+            #MUST REMOVE AND RECREATE ALL:
+            repeated.manageRepeated(transacao.pk)
+            repeated.createRepeatedTransactions(transacao.total_repeats,
+                                                transacao.data, 
+                                                form.cleaned_data,
+                                                self.request.user)
+
+            repeated.manageRepeated(transacao.pk, update=form.cleaned_data)
+                  
+
 
         if 'repeat' not in self.request.POST or transacao.total_repeats==0:
             transacao.repeat = False
@@ -173,6 +184,23 @@ class LogoutView(generic.View):
 
 """
 TODO:
+    It is recreating everything, but not removing.
+
+    When updating Transacoes. 
+    if the original date stills the same, 
+    remove the date value from dict in repeat_days module.
+    Case the date is also been updated, all the registers must be deleted 
+    and recreated with the new date.
+
+
+    Fix Future dates issue:
+        Create a Transacao object with date= 10/08/2017 and repeate it 5x.
+        The next month's date has been set to day -1 (only happened at server
+        probably due to localtime at server, change model to use localdata)
+
+        Fix updating the date.
+
+
     Add the last month saldus to the present month.
     
     Add some magin-bottom to the button "Lançamentos Futuros:"
