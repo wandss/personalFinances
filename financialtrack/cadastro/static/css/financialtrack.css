@@ -1,0 +1,15 @@
+a.list-group-item{
+    color: #15A;
+}
+.btn,.form-control{
+    border-radius: 0px;
+}
+.debt{
+    color: red;
+}
+.cred{
+    color: #539A63;
+}
+#month_list{
+    text-indent: 30px;
+}

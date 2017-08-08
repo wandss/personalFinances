@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{%load staticfiles%}
+{%block content%}
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">{{page_title}}
+            <small> Secondary Text</small>
+        </h3>
+    </div>
+    <div class="row">
+        {%for opt in opcoes%}
+            <div class="col-md-3 portfolio-item">
+            <a href="{{opt}}/add">
+                <img class="img-responsive" src="/static/images/{{opt.image_name}}" alt="{{opt.nome}}">
+            </a>
+            <div>
+                <label> {{opt}} </label>
+            </div>
+           </div>
+        {%endfor%}
+    </div>
+{%endblock%}
