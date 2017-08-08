@@ -173,7 +173,7 @@ class LogoutView(generic.View):
 
 """
 TODO:
-    The Total Sum must be applied only for Transacoes that are rendered.
+    Add the last month saldus to the present month.
     
     Add some magin-bottom to the button "Lançamentos Futuros:"
 
