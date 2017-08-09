@@ -36,7 +36,7 @@
                     <thead>
                         <tr>
                         {%for month in current_month.keys%}
-                            <th class="my_table_head">{{month}}</th>
+                            <th>{{month}}</th>
                         {%endfor%}
                         </tr>
                     </thead>
@@ -60,7 +60,7 @@
                     <thead>
                         <tr>
                         {%for k in history.keys%}
-                            <th class="my_table_head">{{k}}</th>
+                            <th>{{k}}</th>
                         {%endfor%}    
                         </tr>
                     </thead>
@@ -80,15 +80,17 @@
 
             {%if future_expenses%}
             <div>
-                <h4 id="future_title" class="btn btn-block btn-warning" data-toggle="collapse" data-target="#future_trans" >Lançamentos Futuros:</h4>
+                <h4 id="future_title" class="btn btn-block btn-warning" data-toggle="collapse" data-target="#future_trans" >
+                    <span class="glyphicon glyphicon-menu-down" id="show_future_trans"> </span> Lançamentos Futuros: 
+                </h4>
                 <div id="future_trans" class="collapse">
                 {%for key,value in future_expenses.items%}
-                <h4 class="well well-sm well_title">{{key}}:</h4>
+                <h6 class="well well-sm well_title">{{key}}:</h6>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                         {%for header in value.keys%}
-                            <th class="my_table_head" id="future_header">{{header}}</th>
+                            <th id="future_header">{{header}}</th>
                         {%endfor%}
                         </tr>
                     </thead>

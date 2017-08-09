@@ -61,8 +61,8 @@ class Statistics(object):
 
         all_future_payments = Transacoes.objects.filter(
             incluido_por=self.user,
-            data__year__gte=self.current_date.year,
-            repeat = True).values('estabelecimento','valor','total_repeats')
+            data__gte=self.current_date).values(
+                'estabelecimento','valor','total_repeats','data')
 
         for est in set([result['estabelecimento'] for result in 
                         all_future_payments]):

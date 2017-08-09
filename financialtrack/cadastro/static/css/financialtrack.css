@@ -38,4 +38,9 @@ a.list-group-item{
 .well_title{
     background: linear-gradient(to bottom, black,white, gray 290% );
     color: white;
+    font-size: 16px;
+    text-shadow: 1px 2px 3px black;
+}
+#show_future_trans{
+    float: left;
 }
