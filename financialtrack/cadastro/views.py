@@ -55,10 +55,17 @@ class TransacoesCreate(generic.edit.CreateView):
         transacao.incluido_por = self.request.user
         if self.request.POST.get('data'):
             transacao.data = transacao.data.replace(
+<<<<<<< HEAD
                 year=int(self.request.POST.get('data').split('/')[-1]),
                 month=int(self.request.POST.get('data').split('/')[1]),
                 day=int(self.request.POST.get('data').split('/')[0]),
                 hour=7, minute=40)
+=======
+                    year=int(self.request.POST.get('data').split('/')[-1]),
+                    month=int(self.request.POST.get('data').split('/')[1]),
+                    day=int(self.request.POST.get('data').split('/')[0]),
+                    hour=7, minute=40)
+>>>>>>> ecb8885e842fe183a62db3e88d50d40ea49078f6
 
         if 'repeat' in self.request.POST:
            total_repeats = int(self.request.POST.get('total_repeats'))
