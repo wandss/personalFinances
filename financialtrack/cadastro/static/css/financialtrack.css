@@ -27,11 +27,15 @@ a.list-group-item{
     background:none;
     border-radius: 0px;
 }
-.my_table_head{
-    background: linear-gradient(to bottom, #171,white, gray 180% );
+/*.my_table_head{
+    background: linear-gradient(to bottom, #171,white, gray 290% );
     border: none;
 }
+*/
 .negative_value{
     color: red;
 }
-
+.well_title{
+    background: linear-gradient(to bottom, black,white, gray 290% );
+    color: white;
+}
