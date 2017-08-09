@@ -68,7 +68,9 @@ class Statistics(object):
             results = all_future_payments.filter(estabelecimento=est)
             value = results[0]['valor']
             pago = Transacoes.objects.filter(
-                data__lte=self.current_date, estabelecimento=est).count()
+                data__lte=self.current_date,
+                estabelecimento=est, valor=value,
+                repeat=True).count()
             parcelas = results.count() + pago
             total = value * parcelas
             due_payments = (total - (pago * (total/parcelas))).quantize(
