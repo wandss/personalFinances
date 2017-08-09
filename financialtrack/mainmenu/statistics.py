@@ -56,6 +56,7 @@ class Statistics(object):
         the current date, for the given user.
         """
 
+        future_expenses = OrderedDict()
         all_future_payments = Transacoes.objects.filter(
             incluido_por=self.user,
             data__gte=self.current_date).values(
