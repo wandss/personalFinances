@@ -110,7 +110,7 @@
             <ul class="list-group">
                 <li class="list-group-item active">Navegue por datas</li>
             {%for key, value in years_list.items%}
-            <a href="#" class="list-group-item" data-toggle="collapse" data-target="#months{{forloop.counter}}">
+            <a class="list-group-item" data-toggle="collapse" data-target="#months{{forloop.counter}}">
                 {{key}}
             </a>
             <ul class="list-group collapse" id="months{{forloop.counter}}">

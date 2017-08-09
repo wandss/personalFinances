@@ -185,6 +185,10 @@ class LogoutView(generic.View):
 
 """
 TODO:
+    Teste navigation at Year/Month menu.
+
+   *Check query set in statistics, when retrieving future transacions.
+
     At future transactions, Fix the calculation for the paid documents:
         Must filter by 'gte' current_date or 'gt'
 
@@ -197,7 +201,8 @@ TODO:
     Test when updating "data" attribute for transacoes.
         Test with repeated days.
         When creating a future date that has data greater than today's date,
-        set repeat property to True????
+        set repeat property to True???? (this will allow this to be shown as a 
+        future Transacation.
 
     Add javascript validations to: If user selects "Repeat", 
         it must insert a value for total_repeats

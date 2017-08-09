@@ -54,13 +54,11 @@ class TransacoesCreate(generic.edit.CreateView):
             pk=int(self.request.POST.get('despesa')))
         transacao.incluido_por = self.request.user
         if self.request.POST.get('data'):
-            year = self.request.POST.get('data').split('/')[-1]
-            month = self.request.POST.get('data').split('/')[1]
-            day = self.request.POST.get('data').split('/')[0]
-            transacao.data = transacao.data.replace(year=int(year))
-            transacao.data = transacao.data.replace(month=int(month))
-            transacao.data = transacao.data.replace(day=int(day))
-
+            transacao.data = transacao.data.replace(
+                year=int(self.request.POST.get('data').split('/')[-1]),
+                month=int(self.request.POST.get('data').split('/')[1]),
+                day=int(self.request.POST.get('data').split('/')[0]),
+                hour=7, minute=40)
 
         if 'repeat' in self.request.POST:
            total_repeats = int(self.request.POST.get('total_repeats'))
