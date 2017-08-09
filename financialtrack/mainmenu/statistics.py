@@ -55,9 +55,6 @@ class Statistics(object):
         transactions that has 'data' attribute bigger than 
         the current date, for the given user.
         """
-        future_expenses = OrderedDict()
-        label = OrderedDict()
-
 
         all_future_payments = Transacoes.objects.filter(
             incluido_por=self.user,
@@ -68,17 +65,17 @@ class Statistics(object):
                         all_future_payments]):
 
             results = all_future_payments.filter(estabelecimento=est)
-            total = results.aggregate(Sum('valor'))['valor__sum']
-            parcelas = results.count()
-            pago = results.filter(data__year__lte=self.current_date.year,
-                data__month__lte=self.current_date.month).count()
+            value = results[0]['valor']
+            pago = Transacoes.objects.filter(
+                data__lte=self.current_date).count()
+            parcelas = results.count() + pago
+            total = value * parcelas
             due_payments = (total - (pago * (total/parcelas))).quantize(
                     Decimal('1.00'), rounding=ROUND_DOWN)
 
             future_expenses[est] = {
                 'Total': total, 
-                'Parcelas': parcelas,
-                'Pagas': pago,
+                'Parcelas': "{}/{}".format(pago,parcelas),
                 'Restante': due_payments
             }
             

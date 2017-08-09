@@ -185,12 +185,16 @@ class LogoutView(generic.View):
 
 """
 TODO:
-    Teste navigation at Year/Month menu.
-
-   *Check query set in statistics, when retrieving future transacions.
-
     At future transactions, Fix the calculation for the paid documents:
+        For current_date:
+            parcels are ok
+        For month:
+            parcels are = 0
+
         Must filter by 'gte' current_date or 'gt'
+        Future Transactions, corre
+
+    Teste navigation at Year/Month menu.
 
     "Navegue por datas" is not correctly ordered, test for years less than
         198.. change it to a OrderedDict
