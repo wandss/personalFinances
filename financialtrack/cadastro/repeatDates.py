@@ -43,6 +43,8 @@ class RepeatTransaction(object):
             old = repeated.exclude(data__gte=transacao.data)
 
             if update:
+                if 'data' in update:
+                    update.pop('data')
                 future.update(**update)
                 future.update(total_repeats=len(repeated)-len(old))
                 old.update(total_repeats=len(old))
@@ -57,7 +59,6 @@ class RepeatTransaction(object):
         """
         total_days = monthrange(old_date.year,old_date.month)[-1]
         new_date = old_date+datetime.timedelta(total_days)
-
         if total_days == old_date.day:
             """Incmrements a date or datetime based on the 
             the last day for each month"""
@@ -66,3 +67,5 @@ class RepeatTransaction(object):
                 day=monthrange(new_date.year, new_date.month)[-1])
 
         return new_date
+
+

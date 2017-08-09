@@ -110,7 +110,9 @@ class TransacaoUpdate(generic.edit.UpdateView):
     def form_valid(self, form):
         transacao = form.save(commit=False)
         repeated = RepeatTransaction()
-        #import pdb;pdb.set_trace()#DEBUG
+
+                  
+
 
         if 'repeat' not in self.request.POST or transacao.total_repeats==0:
             transacao.repeat = False
@@ -125,6 +127,16 @@ class TransacaoUpdate(generic.edit.UpdateView):
                                                 form.cleaned_data,
                                                 self.request.user)
         else:
+            if Transacoes.objects.get(pk=transacao.id) != transacao.data:
+                repeated.manageRepeated(transacao.pk)
+                repeated.createRepeatedTransactions(transacao.total_repeats,
+                                                    transacao.data, 
+                                                    form.cleaned_data,
+                                                    self.request.user)
+
+                repeated.manageRepeated(transacao.pk, update=form.cleaned_data)
+                return super(TransacaoUpdate, self).form_valid(form)
+
             if Transacoes.objects.get(
                 pk=transacao.pk).total_repeats != transacao.total_repeats:
                 """Changing the number of repetitions, makes necessary
@@ -173,23 +185,16 @@ class LogoutView(generic.View):
 
 """
 TODO:
-    Add the last month saldus to the present month.
-    
-    Add some magin-bottom to the button "Lançamentos Futuros:"
-
-    When creating transacao objects with data property as a future date, 
-        and also repeating more dates, the system is repeating the same date
-        for the current month.
+    At future transactions, Fix the calculation for the paid documents:
+        Must filter by 'gte' current_date or 'gt'
 
     "Navegue por datas" is not correctly ordered, test for years less than
-        198..
-
-    Add data Toggle to Lançamentos Futuros, to clean up the screen
+        198.. change it to a OrderedDict
 
     Test: Create a Transacao with old date, then, update it to present date.
         Do the same with a Transacao which has repeated dates.
 
-    Test when updatind "data" field for transacoes.
+    Test when updating "data" attribute for transacoes.
         Test with repeated days.
         When creating a future date that has data greater than today's date,
         set repeat property to True????
@@ -197,7 +202,7 @@ TODO:
     Add javascript validations to: If user selects "Repeat", 
         it must insert a value for total_repeats
 
-    Create statistics based on last three months:
+    Create statistics based on the last three months:
         Sample: If a payment occurred at the same date for
         the last three months send mail or send message informing 
         that at this date you have this payment to do 

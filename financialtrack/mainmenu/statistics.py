@@ -5,25 +5,32 @@ from django.db.models import Sum
 from cadastro.models import Transacoes
 
 class Statistics(object):
+    """Makes some caulculations to generates statistical data 
+    based on data base's information.
+    """
 
     def __init__(self, user, current_date):
         self.current_date = current_date 
         self.user = user
 
     def summarizedData(self, month=False):
+        """Shows the totals for money expent, received and 
+        calculates the balance for the current month and also
+        for all transacations for the given user.
+        """
         current = OrderedDict()
 
         if month:
             query_set = Transacoes.objects.filter(
-                    data__year=self.current_date.year,
-                    data__month=self.current_date.month,
-                    data__day__lte=self.current_date.day,
-                    incluido_por=self.user)
+                incluido_por=self.user,
+                data__lte=self.current_date,
+                data__year=self.current_date.year,
+                data__month=self.current_date.month
+            )
 
         else:
             query_set = Transacoes.objects.filter(
-                    data__year__lte=self.current_date.year,
-                    data__month__lte=self.current_date.month,
+                    data__lte=self.current_date,
                     incluido_por=self.user)
 
         credit = query_set.filter(tipo_trans=2).aggregate(
@@ -44,6 +51,10 @@ class Statistics(object):
         return current
 
     def summarizedFutureExpenses(self):
+        """Group, calculates and return a dictionary with
+        transactions that has 'data' attribute bigger than 
+        the current date, for the given user.
+        """
         future_expenses = OrderedDict()
         label = OrderedDict()
 
@@ -74,6 +85,9 @@ class Statistics(object):
         return future_expenses                                    
 
     def getYearMonths(self):
+        """Query the database for all Transactions and makes 
+        a dictionary, grouping than by year and month.
+        """
         year_months = OrderedDict()
         transacoes = Transacoes.objects.filter(
             incluido_por=self.user).order_by('data')
