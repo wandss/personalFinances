@@ -86,22 +86,24 @@
                 <div id="future_trans" class="collapse">
                 {%for key,value in future_expenses.items%}
                 <h6 class="well well-sm well_title">{{key}}:</h6>
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                        {%for header in value.keys%}
-                            <th id="future_header">{{header}}</th>
-                        {%endfor%}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        {%for content in value.values%}
-                            <td>{{content}}</td>
-                        {%endfor%}
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                            {%for header in value.keys%}
+                                <th id="future_header">{{header}}</th>
+                            {%endfor%}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            {%for content in value.values%}
+                                <td>{{content}}</td>
+                            {%endfor%}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 {%endfor%}
                 </div>
             </div>
