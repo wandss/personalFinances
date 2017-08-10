@@ -15,7 +15,7 @@
                         <a class="list-group-item" href={{result.pk}}>{{result}}
                         </a>
                     {%elif page_title == 'Transacoes'%}
-                       <a class="list-group-item" href="{{result.pk}}">
+                       <a class="list-group-item" href="{{result.pk}}" id="transacoes_list">
                            {%if result.tipo_trans == 1%}
                                <span class="glyphicon glyphicon-minus debt"></span>
                            {%else%}
@@ -43,7 +43,7 @@
                     <tbody>
                         <tr>
                         {%for value in current_month.values%}    
-                            {%if value < 0%}
+                            {%if '-' in value%}
                             <td class="negative_value">{{value}}</td>
                             {%else%}
                             <td>{{value}}</td>
@@ -67,7 +67,7 @@
                     <tbody>
                         <tr>
                             {%for v in history.values%}
-                            {%if v < 0%}
+                            {%if '-' in v%}
                             <td class="negative_value">{{v}}</td>
                             {%else%}
                             <td>{{v}}</td>

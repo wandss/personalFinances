@@ -44,9 +44,9 @@ class Statistics(object):
             debit = 0
 
         saldo = credit - debit
-        current['Crédito'] = credit
-        current['Débito'] = debit
-        current['Saldo'] = saldo
+        current['Crédito'] = '{:20,.2f}'.format(credit)
+        current['Débito'] = '{:20,.2f}'.format(debit)
+        current['Saldo'] = '{:20,.2f}'.format(saldo)
 
         return current
 
@@ -77,9 +77,9 @@ class Statistics(object):
                     Decimal('1.00'), rounding=ROUND_DOWN)
 
             future_expenses[est] = {
-                'Total': total, 
+                'Total': '{:20,.2f}'.format(total), 
                 'Parcelas': "{}/{}".format(pago,parcelas),
-                'Restante': due_payments
+                'Restante': '{:20,.2f}'.format(due_payments)
             }
             
         return future_expenses                                    
