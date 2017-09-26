@@ -3,7 +3,7 @@
 {%block content%}
     <!--Rows-->
     <div class = "row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <ul class="list-group">
                 <li class="list-group-item active">
                     <a href="/cadastro/{{page_title}}/add" type="submit" class="btn btn-sm btn-warning">
@@ -21,14 +21,15 @@
                            {%else%}
                                <span class="glyphicon glyphicon-plus cred"></span>
                            {%endif%}
-                           {{result}} - {{result.data|date:'d/m/y'}}
+                           {{result}} - {{result.data|date:'d/m/y'}} -
+                           R$ {{result.valor}}
                        </a>
                     {%endif%}
                 {%endfor%}
             </ul>
         </div>
         {%if page_title == 'Transacoes'%}
-        <div class="col-md-3 well well-sm my_well">
+        <div class="col-md-4 well well-sm my_well">
             {%if current_month%}
             <div>
                 <h4 class="well well-sm well_title">Lançamentos até: {{current_date|date:'d/m/Y'}}</h4>
@@ -46,7 +47,7 @@
                             {%if '-' in value%}
                             <td class="negative_value">{{value}}</td>
                             {%else%}
-                            <td>{{value}}</td>
+                            <td class="positive_value">{{value}}</td>
                             {%endif%}
                         {%endfor%}
                         </tr>
@@ -70,7 +71,7 @@
                             {%if '-' in v%}
                             <td class="negative_value">{{v}}</td>
                             {%else%}
-                            <td>{{v}}</td>
+                            <td class="positive_value">{{v}}</td>
                             {%endif%}
                             {%endfor%}
                         </tr>
@@ -98,7 +99,7 @@
                         <tbody>
                             <tr>
                             {%for content in value.values%}
-                                <td>{{content}}</td>
+                                <td class="future_value">{{content}}</td>
                             {%endfor%}
                             </tr>
                         </tbody>
@@ -110,7 +111,7 @@
             {%endif%}
         </div>
         {%endif%}
-        <div class="col-md-3">
+        <div class="col-md-4">
             <ul class="list-group">
                 <li class="list-group-item active">Navegue por datas</li>
             {%for key, value in years_list.items%}

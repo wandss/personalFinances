@@ -30,6 +30,12 @@ a.list-group-item{
 .negative_value{
     color: red;
 }
+.positive_value{
+    color: #2378BB;
+}
+.future_value{
+    color: #8B4513;
+}
 .well_title{
     background: linear-gradient(to bottom, black,white, gray 290%);
     color: white;
