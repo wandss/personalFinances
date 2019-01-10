@@ -1,0 +1,51 @@
+a.list-group-item{
+    color: #15A;
+}
+.btn,.form-control{
+    border-radius: 0px;
+}
+.debt{
+    color: red;
+}
+.cred{
+    color: #539A63;
+}
+#month_list{
+    text-indent: 30px;
+}
+
+#future_title{
+    margin-bottom: 15px;
+}
+.navbar{
+    background: black;
+    background: linear-gradient(-17deg, gray 5%, black, #049 100%); 
+    border: none;
+    box-shadow: 2px 3px 20px 5px gray;
+}
+.my_well{
+    background:none;
+    border-radius: 0px;
+}
+.negative_value{
+    color: red;
+}
+.positive_value{
+    color: #2378BB;
+}
+.future_value{
+    color: #8B4513;
+}
+.well_title{
+    background: linear-gradient(to bottom, black,white, gray 290%);
+    color: white;
+    font-size: 16px;
+    text-shadow: 1px 2px 3px black;
+}
+#show_future_trans{
+    float: left;
+}
+#transacoes_list{
+    text-align: justify;
+    text-justify: inter-word;
+}

@@ -14,7 +14,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LANGUAGE_CODE = 'pt-br'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wandss.pythonanywhere.com']
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
