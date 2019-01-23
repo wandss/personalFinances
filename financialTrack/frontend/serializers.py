@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from frontend.models import NavMenu, DropdownMenu
+from frontend.models import NavMenu, DropdownMenu, AppData
 
 class DropdownMenuSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,3 +13,9 @@ class NavMenuSerializer(serializers.ModelSerializer):
         model = NavMenu
         fields = ('id', 'name', 'icon', 'link', 'title')
 
+
+class AppDataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AppData
+        fields = ('app_name',)

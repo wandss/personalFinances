@@ -14,9 +14,18 @@ class NavMenu(Menus):
         return self.name
 
 class DropdownMenu(Menus):
-    title = models.ForeignKey(NavMenu, null=True, blank=True, 
+    title = models.ForeignKey(NavMenu, null=True, blank=True,
                               on_delete=models.SET_NULL, related_name="title")
     link = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
+
+class AppData(models.Model):
+    app_name = models.CharField(max_length=20)
+
+    class Meta:
+        verbose_name_plural = 'App Data'
+
+    def __str__(self):
+        return self.app_name

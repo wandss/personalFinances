@@ -3,12 +3,12 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.utils.translation import gettext as _
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListCreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
-from frontend.models import NavMenu
+from frontend.models import NavMenu, AppData
 from transactions.models import Transactions
-from frontend.serializers import NavMenuSerializer
+from frontend.serializers import NavMenuSerializer, AppDataSerializer
 from financialTrack.settings.base import LANGUAGE_CODE
 
 
@@ -47,6 +47,13 @@ class MainMenuAPIView(APIView):
                 main_menu[k][i] = _(calendar.month_name[month])
 
         return Response(main_menu)
+
+
+class AppDataListAPIView(ListAPIView):
+
+    permission_classes = (AllowAny,)
+    serializer_class = AppDataSerializer
+    queryset = AppData.objects.all()
 
 """
 TODO:
