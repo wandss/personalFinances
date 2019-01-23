@@ -3,7 +3,6 @@ __pycache__/
 *.pyc
 *$py.class
 *.sqlite3
-.sqlite3
 *.env
 *.swp
 *.swo
