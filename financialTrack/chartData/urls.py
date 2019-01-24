@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from chartData.views import ExpenseTypeChartDataViewSet
+from .views import ExpenseTypeChartDataViewSet
 
 app_name = 'chartData'
 router = DefaultRouter()

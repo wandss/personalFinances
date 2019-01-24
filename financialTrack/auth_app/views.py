@@ -44,3 +44,6 @@ class LoginAPIView(APIView):
         data = {'token':token, 'username':user.username}
 
         return Response(data, status=status.HTTP_200_OK)
+"""TODO:Remove this app. Use regular rest_framework auth endpoint
+Creates endpoints to obtain user data
+"""

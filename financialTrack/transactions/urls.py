@@ -1,11 +1,11 @@
 from django.urls import path
-from transactions.views import (ExpenseTypeView, ExpenseTypeUpdateDeleteView,
-                                TransactionsListCreateView,
-                                TransactionsListUpdateDeleteView,
-                                OperationTypeListView, NavByDateListView,
-                                TransactionsYearListAPIView,
-                                TransactionsYearMonthListAPIView,
-                               )
+from .views import (ExpenseTypeView, ExpenseTypeUpdateDeleteView,
+                    TransactionsListCreateView,
+                    TransactionsListUpdateDeleteView,
+                    OperationTypeListView, NavByDateListView,
+                    TransactionsYearListAPIView,
+                    TransactionsYearMonthListAPIView,
+                   )
 
 app_name = 'transactions'
 urlpatterns = [

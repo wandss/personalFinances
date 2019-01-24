@@ -16,7 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_swagger.views import get_swagger_view
 from chartData.urls import charts
+from frontend.views import AppView
+
+schema_view = get_swagger_view(title='Personal Finances API')
 
 urlpatterns = [
     re_path('^api/v1/frontend/', include('frontend.urls',namespace='frontend')),
@@ -27,5 +31,6 @@ urlpatterns = [
     path('api/v1/token/', include('auth_app.urls')),
     #re_path('^api/v1/auth/',include('auth_app.urls', namespace="authentication")),
     re_path('^admin', admin.site.urls),
-    re_path(r'[\s\S]*', include('frontend.urls', namespace="app")),
+    re_path(r'api/v1/docs/', schema_view),
+    re_path(r'[\s\S]*',AppView.as_view()),
 ]

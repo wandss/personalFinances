@@ -6,9 +6,9 @@ from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
-from frontend.models import NavMenu, AppData
+from .models import NavMenu, AppData
 from transactions.models import Transactions
-from frontend.serializers import NavMenuSerializer, AppDataSerializer
+from .serializers import NavMenuSerializer, AppDataSerializer
 from financialTrack.settings.base import LANGUAGE_CODE
 
 
