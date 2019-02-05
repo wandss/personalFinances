@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from os.path import join, abspath, dirname
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+local = lambda *dirs: join(abspath(dirname(__file__)), *dirs)
+BASE_DIR = local('..', '..')
+root = lambda *dirs: join(abspath(BASE_DIR), *dirs)
 
 
 # Quick-start development settings - unsuitable for production
@@ -79,7 +83,8 @@ WSGI_APPLICATION = 'financialTrack.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': root('db.sqlite3')
     }
 }
 
