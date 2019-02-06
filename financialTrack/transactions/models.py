@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class ExpenseType(models.Model):
     label = models.CharField(max_length=50)
     dt_creation = models.DateTimeField(auto_now=True)
@@ -10,7 +11,8 @@ class ExpenseType(models.Model):
 
     class Meta:
         ordering = ['label']
-        unique_together = ('label','created_by')
+        unique_together = ('label', 'created_by')
+
 
 class OperationType(models.Model):
     label = models.CharField(max_length=10)
@@ -22,16 +24,16 @@ class OperationType(models.Model):
     class Meta:
         ordering = ['label']
 
+
 class Transactions(models.Model):
     expense = models.ForeignKey(ExpenseType, related_name='expenses',
                                 on_delete=models.PROTECT)
     operation_type = models.ForeignKey(OperationType,
                                        related_name='operationtype',
-                                       on_delete=models.PROTECT
-                                      )
-    estabelecimento = models.CharField(max_length=50)
-    amount = models.DecimalField(max_digits=9, decimal_places=2)
-    dt_transaction = models.DateTimeField()
+                                       on_delete=models.PROTECT)
+    estabelecimento = models.CharField('Establishment', max_length=50)
+    amount = models.DecimalField('Value', max_digits=9, decimal_places=2)
+    dt_transaction = models.DateTimeField('Transaction Date')
     dt_creation = models.DateTimeField(auto_now=True)
     info = models.CharField(max_length=100, blank=True, null=True)
     parcels = models.IntegerField(default=0)
@@ -40,7 +42,7 @@ class Transactions(models.Model):
     def __str__(self):
         return self.estabelecimento
 
-       # return "{}-{}".format(self.estabelecimento, self.expense)
+    # return "{}-{}".format(self.estabelecimento, self.expense)
 
     class Meta:
         ordering = ['-dt_transaction']
