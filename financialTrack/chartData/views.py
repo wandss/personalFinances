@@ -16,7 +16,6 @@ class ExpenseTypeChartDataViewSet(ViewSet):
                                                dt_creation__lte=timezone.now())
         years = list(set([query.dt_transaction.year for query in queryset]))
         years.sort()
-        import ipdb; ipdb.set_trace()  #DEBUG
         for year in years:
             months.append(list(set(
                 [q.dt_transaction.month
@@ -40,6 +39,7 @@ class ExpenseTypeChartDataViewSet(ViewSet):
 
 """
 TODO
+  THIS APP IS NOT BEEN USED. SOON TO BE REMOVED
   If not queryset return Response 404
   Retrieve only data from specific user
   request.user

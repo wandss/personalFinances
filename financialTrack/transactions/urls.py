@@ -4,18 +4,17 @@ from .views import (ExpenseTypeView, ExpenseTypeUpdateDeleteView,
                     TransactionsListUpdateDeleteView,
                     OperationTypeListView, NavByDateListView,
                     TransactionsYearListAPIView,
-                    TransactionsYearMonthListAPIView,
-                   )
+                    TransactionsYearMonthListAPIView)
 
 app_name = 'transactions'
 urlpatterns = [
     path('', TransactionsListCreateView.as_view(), name='transactions'),
-    path('<int:pk>',TransactionsListUpdateDeleteView.as_view(),
+    path('<int:pk>', TransactionsListUpdateDeleteView.as_view(),
          name='transaction'),
     path('year/<int:year>', TransactionsYearListAPIView.as_view(),
-        name='transactions_year'),
+         name='transactions_year'),
     path('year/<int:year>/month/<int:month>',
-        TransactionsYearMonthListAPIView.as_view()),
+         TransactionsYearMonthListAPIView.as_view()),
     path('expensetypes/', ExpenseTypeView.as_view(), name='expensetypes'),
     path('expensetypes/<int:pk>', ExpenseTypeUpdateDeleteView.as_view(),
          name='expensetype'),

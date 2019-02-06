@@ -20,16 +20,6 @@ BASE_DIR = local('..', '..')
 root = lambda *dirs: join(abspath(BASE_DIR), *dirs)
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-# SECURITY WARNING: don't run with debug turned on in production!
-
-#ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'frontend',
     'transactions',
-    'chartData',
+    #'chartData':DEPRECATED
 ]
 
 MIDDLEWARE = [
@@ -83,7 +73,6 @@ WSGI_APPLICATION = 'financialTrack.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'NAME': root('db.sqlite3')
     }
 }
@@ -111,11 +100,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
-#TIME_ZONE = 'America/Sao_Paulo'
+#TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 

@@ -4,26 +4,25 @@ from django.views.generic import View
 from django.utils.translation import gettext as _
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, ListAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from .models import NavMenu, AppData
 from transactions.models import Transactions
 from .serializers import NavMenuSerializer, AppDataSerializer
-from financialTrack.settings.base import LANGUAGE_CODE
 
 
 class AppView(View):
 
     def get(self, request):
-        return render(request,'frontend/index.html',{})
+        return render(request, 'frontend/index.html', {})
 
 
 class NavMenuView(ListCreateAPIView):
     queryset = NavMenu.objects.all()
     serializer_class = NavMenuSerializer
 
+
 class MainMenuAPIView(APIView):
-    permissions_classes = [IsAuthenticated]
 
     def get(self, request):
         main_menu = {}
@@ -34,7 +33,7 @@ class MainMenuAPIView(APIView):
             )
 
         for year in years:
-            main_menu[year]= list(set(
+            main_menu[year] = list(set(
                 [months.dt_transaction.month
                  for months in Transactions.objects.filter(
                      dt_transaction__year=year, created_by=request.user)
@@ -54,6 +53,7 @@ class AppDataListAPIView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = AppDataSerializer
     queryset = AppData.objects.all()
+
 
 """
 TODO:
