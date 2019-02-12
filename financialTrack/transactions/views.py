@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import (ListAPIView,
                                      ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView)
+from rest_framework import status
 from transactions.models import ExpenseType, Transactions, OperationType
 from transactions.serializers import (ExpenseTypeSerializer,
                                       TransactionsSerializer,
@@ -13,6 +14,7 @@ from transactions.serializers import (ExpenseTypeSerializer,
 
 
 class ExpenseTypeView(ListCreateAPIView):
+    """List all expense types."""
     serializer_class = ExpenseTypeSerializer
 
     def get_queryset(self):
@@ -23,6 +25,7 @@ class ExpenseTypeView(ListCreateAPIView):
 
 
 class ExpenseTypeUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+    """Retrieve and destroy expense type."""
     serializer_class = ExpenseTypeSerializer
 
     def get_queryset(self):
@@ -30,6 +33,7 @@ class ExpenseTypeUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
 
 class TransactionsListCreateView(ListCreateAPIView):
+    """List and create transactions"""
     serializer_class = TransactionsSerializer
     today = datetime.now()
     today = timezone.make_aware(today)
@@ -38,48 +42,13 @@ class TransactionsListCreateView(ListCreateAPIView):
 
         return Transactions.objects.filter(created_by=self.request.user)
 
-#        if 'today' in self.request.query_params:
-#
-#            if 'old' in self.request.query_params:
-#                date = self.request.query_params.get('old')
-#                return queryset.filter(dt_transaction__lte=self.today)
-#
-#            if 'future' in self.request.query_params:
-#                return queryset.filter(dt_transaction__gt=self.today)
-#
-#            return queryset.filter(dt_transaction__month=self.today.month,
-#                    dt_transaction__year=self.today.year,
-#                    dt_transaction__day__lte=self.today.day)
-#
-#        if 'year' in self.request.query_params:
-#            year = int(self.request.query_params.get('year'))
-#            month = int(self.request.query_params.get('month'))
-#            day = calendar.monthrange(year, month)[-1]
-#
-#            if 'old' or 'future' in self.request.query_params:
-#                reference_date = timezone.make_aware(
-#                        datetime.strptime('{}{}{}'.format(day,month,year),
-#                        "%d%m%Y"))
-#                if 'old' in self.request.query_params:
-#                    return queryset.filter(dt_transaction__lte=reference_date)
-#
-#                elif 'future' in self.request.query_params:
-#                    return queryset.filter(dt_transaction__gte=reference_date)
-#
-#            return queryset.filter(dt_transaction__month=month,
-#                    dt_transaction__year=year,
-#                    dt_transaction__day__lte=day,
-#                    created_by=self.request.user)
-#
-#        else:
-#            return Transactions.objects.filter(created_by=self.request.user)
-
     def perform_create(self, serializer):
 
         return serializer.save(created_by=self.request.user)
 
 
 class TransactionsYearListAPIView(ListAPIView):
+    """List transactions for a given year."""
     serializer_class = TransactionsSerializer
 
     def get_queryset(self):
@@ -90,6 +59,7 @@ class TransactionsYearListAPIView(ListAPIView):
 
 
 class TransactionsYearMonthListAPIView(ListAPIView):
+    """List transactions for specific month and year"""
     serializer_class = TransactionsSerializer
 
     def get_queryset(self):
@@ -102,16 +72,20 @@ class TransactionsYearMonthListAPIView(ListAPIView):
 
 
 class TransactionsListUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+    """Get, update and delete transactions"""
     queryset = Transactions.objects.all()
     serializer_class = TransactionsSerializer
 
 
 class OperationTypeListView(ListAPIView):
+    """List operaion types."""
     serializer_class = OperationTypeSerializer
     queryset = OperationType.objects.all()
 
 
 class NavByDateListView(APIView):
+    """List all years and months from transactions in order to create
+    a navigation menu"""
     def get(self, request):
         nav_by_date = []
         years = list(set([transaction.dt_transaction.year
@@ -135,21 +109,39 @@ class NavByDateListView(APIView):
         return Response(nav_by_date)
 
 
+class TransactionsTotals(APIView):
+    """Calculate values from transations based on given year and month"""
+
+    def get(self, *args, **kwargs):
+        year = kwargs.get('year')
+        month = kwargs.get('month')
+
+        transactions = Transactions.objects.filter(
+            created_by=self.request.user,
+            dt_transaction__year__lte=year,
+            dt_transaction__month__lte=month,
+        )
+
+        expenses = sum([expenses.amount
+                        for expenses in transactions.filter(operation_type=1)])
+
+        income = sum([expenses.amount
+                      for expenses in transactions.filter(operation_type=2)])
+
+        data = {'income': income, 'expenses': expenses,
+                'balance': income - expenses}
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
 """
 TODO:
-    Close API to IsAdminUser only?
-
     Start paginating
     Improve NavByDateListView.
         use something like Transactions.objects.all().date('dt_transaction',
         'year')
         to return a list with dates?
         Then another to show available months for a giving year?
-
-    Remove all those "ifs from TransactionsListCreateView" since now
-        theres two specilized views that achieve the same that overthere
-        has been done with query string
-
 
     Improve get_queryset method to filter transactions by date
     Set a way to keep refreshing JWT token while user is using the app
